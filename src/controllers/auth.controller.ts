@@ -1,12 +1,13 @@
-import { FastifyReply, FastifyRequest } from 'fastify';
+import { PrismaClient } from '@prisma/client';
+import { FastifyReply, FastifyRequest, FastifyInstance  } from 'fastify';
 import { AuthService } from '../services/auth.service';
 import { SignInInput, SignUpInput } from '../types/index';
 
 export class AuthController {
   private authService: AuthService;
 
-  constructor() {
-    this.authService = new AuthService();
+  constructor(prisma: PrismaClient, fastify: FastifyInstance) {
+    this.authService = new AuthService(prisma, fastify);
   }
 
   async login(request: FastifyRequest<{ Body: SignInInput }>, reply: FastifyReply) {
