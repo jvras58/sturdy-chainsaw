@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify';
 import { AuthController } from '../controllers/auth.controller';
 
-export async function setRoutes(fastify: FastifyInstance) {
+export default async function authRoutes(fastify: FastifyInstance) {
   const authController = new AuthController();
 
   fastify.post('/login', authController.login.bind(authController));

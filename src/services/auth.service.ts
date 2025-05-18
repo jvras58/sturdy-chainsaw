@@ -1,6 +1,6 @@
 import { hash, verify } from 'argon2';
 import { PrismaClient } from '@prisma/client';
-import { UnauthorizedException } from '../exceptions/unauthorized.exception';
+import { UnauthorizedException } from '../exceptions/unauthorized';
 import { AuthJwtPayload } from '../types/index';
 
 export class AuthService {
