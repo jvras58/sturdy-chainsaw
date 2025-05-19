@@ -4,12 +4,19 @@ import { configServerOption } from './config/serverconfig';
 import prismaPlugin from './plugins/prisma';
 import swagger from '@fastify/swagger';
 import swaggerUi from '@fastify/swagger-ui';
+import { fastifyCors } from '@fastify/cors';
 
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 3000;
 
 const startServer = async () => {
   const serverOptions = await configServerOption();
   const app: FastifyInstance = Fastify(serverOptions);
+
+  app.register(fastifyCors, {
+    origin: '*',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  });
 
   // Register Swagger
   await app.register(swagger, {
@@ -45,7 +52,7 @@ const startServer = async () => {
     },
   });
 
-  // Register Prisma plugin
+  // Prisma plugin
   await app.register(prismaPlugin);
 
   // Register routes
